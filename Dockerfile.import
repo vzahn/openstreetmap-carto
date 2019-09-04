@@ -8,6 +8,7 @@ deb-src http://ppa.launchpad.net/osmadmins/ppa/ubuntu bionic main' > \
     /etc/apt/sources.list.d/osmadmins-ppa.list
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com \
+    --keyserver-options http-proxy=$http_proxy \
     --recv A438A16C88C6BE41CB1616B8D57F48750AC4F2CB
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
