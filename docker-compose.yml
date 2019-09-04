@@ -5,6 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
       - .:/openstreetmap-carto
     depends_on:
@@ -14,21 +18,35 @@ services:
     environment:
       - PGHOST=db
       - PGUSER=postgres
+      - http_proxy
+      - https_proxy
+      - no_proxy
   db:
     image: db:v1
     build:
       context: .
       dockerfile: Dockerfile.db
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     ports:
       - "127.0.0.1:5432:5432"
     environment:
       - PG_WORK_MEM
       - PG_MAINTENANCE_WORK_MEM
+      - http_proxy
+      - https_proxy
+      - no_proxy
   import:
     image: import:v1
     build:
       context: .
       dockerfile: Dockerfile.import
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
       - .:/openstreetmap-carto
     depends_on:
@@ -41,3 +59,6 @@ services:
       - OSM2PGSQL_CACHE
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
+      - http_proxy
+      - https_proxy
+      - no_proxy
